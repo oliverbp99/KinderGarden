@@ -1,4 +1,8 @@
+import java.util.Arrays;
 import java.util.*;
+import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class KinderGarden {
     public static void main(String[] args) throws FileNotFoundException {
@@ -43,18 +47,18 @@ public class KinderGarden {
             System.out.println("2. Show Phonelist");
             System.out.println("3. Delete person from Phonelist");
             mainOption = input.nextInt();
-            if(mainOption == 1){
+            if (mainOption == 1) {
                 addToPhoneList(input, phoneList);
                 mainMenu(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
-            }else if(mainOption == 2) {
+            } else if (mainOption == 2) {
                 printPhoneList(phoneList);
                 System.out.println("1. Back");
                 input.nextInt();
                 mainMenu(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
-            }else if(mainOption == 3) {
+            } else if (mainOption == 3) {
                 deleteFromPhoneList(input, phoneList);
                 mainMenu(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
-            }else {
+            } else {
                 mainMenu(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
             }
 
@@ -158,7 +162,14 @@ public class KinderGarden {
                 childrenArr[i] = c1;
                 break;
             }
-        } showMembers(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
+
+        }
+        System.out.println("Type 1 = add child to wait list");
+        int chi = input.nextInt();
+        if(chi == 1){
+            addChildToWaitList(input, childrenWaitList);
+        }
+
     }
 
     public static void createPedagogue(File f, Scanner input, Children[] childrenArr, ArrayList<Pedagogue> pedaList, Parent[] parentArr, Leader[] leaderArr, ArrayList<Children> childrenWaitList, HashMap<Integer, String> phoneList) throws FileNotFoundException {
@@ -638,5 +649,29 @@ public class KinderGarden {
         int pn = input.nextInt();
         phoneList.remove(pn);
     }
+    public static void addChildToWaitList(Scanner input, ArrayList<Children> childrenWaitList){
+        System.out.println("Enter the first name of the child, you want to add to the wait list");
+        String fn = input.next();
+        System.out.println("Enter the last name of the child, you want to add to the wait list");
+        String ln = input.next();
+        System.out.println("Enter the child's age: ");
+        int age = input.nextInt();
+        Children child = new Children(fn, ln, age);
+        childrenWaitList.add(child);
+        System.out.println("Child has been added to the waitlist");
+    }
+    public static void printWaitList(ArrayList<Children> childrenWaitList){
+        System.out.println("");
+    }
+    public static void deleteFromWaitList(Scanner input, ArrayList<Children> childrenWaitList){
+        System.out.println("Enter the firstName of the person you want to delete");
+        String fn = input.next();
+        System.out.println("Enter the lastName of the person you want to delete");
+        String ln = input.next();
+        System.out.println("Enter the age of the person you want to delete");
+        int age = input.nextInt();
+        Children child = new Children(fn, ln, age);
+        childrenWaitList.remove(child);
 
+    }
 }
