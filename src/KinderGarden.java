@@ -177,7 +177,7 @@ public class KinderGarden {
         String fn = input.next();
         System.out.println("Enter the lastname of the Pedagogue: ");
         String ln = input.next();
-        System.out.println("Enter the phonenumber of the Pedagogue: ");
+        System.out.println("Enter the phone number of the Pedagogue: ");
         int pn = input.nextInt();
         System.out.println("Enter the mail of the Pedagogue: ");
         String mail = input.next();
@@ -195,7 +195,7 @@ public class KinderGarden {
         String fn = input.next();
         System.out.println("Enter the lastname of the parent");
         String ln = input.next();
-        System.out.println("Enter the phonenumber of the parent");
+        System.out.println("Enter the phone number of the parent");
         int phonenumber = input.nextInt();
         System.out.println("Enter the mail address of the parent");
         String mail = input.next();
@@ -203,15 +203,15 @@ public class KinderGarden {
         String childFn = input.next();
         System.out.println("Enter the lastname of the children, that you want the parent to be attached to: ");
         String childLn = input.next();
-        for(int i = 0; i <= childrenArr.length - 1; i++) {
-            if(childrenArr[i].getFirstName().equalsIgnoreCase(childFn) && childrenArr[i].getLastName().equalsIgnoreCase(childLn)) {
+        for (int i = 0; i <= childrenArr.length - 1; i++) {
+            if (childrenArr[i].getFirstName().equalsIgnoreCase(childFn) && childrenArr[i].getLastName().equalsIgnoreCase(childLn)) {
                 Parent p1 = new Parent(fn, ln, phonenumber, mail);
-                for(int k = 0; k < parentArr.length - 1; k++) {
-                    if(parentArr[k] == null) {
+                for (int k = 0; k < parentArr.length - 1; k++) {
+                    if (parentArr[k] == null) {
                         p1.setChildren(childrenArr[i]);
                         parentArr[k] = p1;
                         break;
-                    }else if(parentArr[k] != null){
+                    } else if (parentArr[k] != null) {
                         System.out.println("The list of parents is full");
                     }
                 }
@@ -241,25 +241,26 @@ public class KinderGarden {
         System.out.println("This leader is created: " + Arrays.toString(leaderArr));
     }
 
-    public static void writePedagogueToFile(File f, ArrayList<Pedagogue> pedagogueList){
-        try{
+    public static void writePedagogueToFile(File f, ArrayList<Pedagogue> pedagogueList) {
+        try {
             FileWriter writer = new FileWriter(f, true);
-            for(int i = 0; i <= pedagogueList.size() - 1; i++ ){
+            for (int i = 0; i <= pedagogueList.size() - 1; i++) {
                 writer.write(pedagogueList.get(i).getFirstName() + " " + pedagogueList.get(i).getLastName() + " " + pedagogueList.get(i).getPhoneNumber() + " " + pedagogueList.get(i).getMail() + " " + pedagogueList.get(i).getArea() + " ");
-                if(i != pedagogueList.size() - 1){
+                if (i != pedagogueList.size() - 1) {
                     System.out.println("\n");
                 }
             }
             writer.close();
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public static void readPedagogueFromFile(ArrayList<Pedagogue> pedaList){
-        try{
+
+    public static void readPedagogueFromFile(ArrayList<Pedagogue> pedaList) {
+        try {
             File f = new File("./src/Pedagogue.txt");
             Scanner scan = new Scanner(f);
-            while(scan.hasNextLine()){
+            while (scan.hasNextLine()) {
                 String line = scan.nextLine();
                 Scanner lineScan = new Scanner(line);
                 String firstName = lineScan.next();
@@ -267,27 +268,27 @@ public class KinderGarden {
                 int phoneNumber = lineScan.nextInt();
                 String mail = lineScan.next();
                 String area = lineScan.next();
-                Pedagogue pedas = new Pedagogue(firstName, lastName, phoneNumber, mail,area);
+                Pedagogue pedas = new Pedagogue(firstName, lastName, phoneNumber, mail, area);
                 pedaList.add(pedas);
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void writeLeaderToFile(ArrayList<Leader> leaderList){
-        try{
+    public static void writeLeaderToFile(ArrayList<Leader> leaderList) {
+        try {
             File f = new File("./src/Leader.txt");
             FileWriter writer = new FileWriter(f);
-            for(int i = 0; i <= leaderList.size() -1; i++ ){
+            for (int i = 0; i <= leaderList.size() - 1; i++) {
                 writer.write(leaderList.get(i).getFirstName() + " " + leaderList.get(i).getLastName() + " " + leaderList.get(i).getPhoneNumber() + " " + leaderList.get(i).getMail());
                 writer.close();
-                if(i != leaderList.size() - 1){
+                if (i != leaderList.size() - 1) {
                     writer.write("\n");
                 }
             }
 
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -312,25 +313,26 @@ public class KinderGarden {
         }
     }
 
-    public static void writeChildrenToFile(Children[] childrenArr){
+    public static void writeChildrenToFile(Children[] childrenArr) {
         int i = 0;
-        try{
+        try {
             File f = new File("./src/Children.txt");
             FileWriter fileWriter = new FileWriter(f, false);
             BufferedWriter br = new BufferedWriter(fileWriter);
 
-           while(childrenArr[i] != null){
+            while (childrenArr[i] != null) {
                 br.write(childrenArr[i].getFirstName() + " " + childrenArr[i].getLastName() + " " + childrenArr[i].getAge() + " " + childrenArr[i].getArea() + "\n");
                 i++;
             }
             br.close();
 
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public static void readChildrenFromFile(Children[] childArr) throws FileNotFoundException{
-        try{
+
+    public static void readChildrenFromFile(Children[] childArr) throws FileNotFoundException {
+        try {
             File f = new File("./src/Children.txt");
             Scanner scan = new Scanner(f);
             int a = 0;
@@ -352,24 +354,25 @@ public class KinderGarden {
                     }
                 }
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public static void writeParentsToFile(Parent[] parentArr) throws FileNotFoundException{
+
+    public static void writeParentsToFile(Parent[] parentArr) throws FileNotFoundException {
         int i = 0;
-        try{
+        try {
             File f = new File("./src/Parent.txt");
             FileWriter fileWriter = new FileWriter(f);
             BufferedWriter br = new BufferedWriter(fileWriter);
 
-            while(parentArr[i] != null){
+            while (parentArr[i] != null) {
                 br.write(parentArr[i].getFirstName() + " " + parentArr[i].getLastName() + " " + parentArr[i].getPhoneNumber() + " " + parentArr[i].getMail() + " " + parentArr[i].getChildren() + "\n");
                 i++;
             }
             br.close();
 
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
