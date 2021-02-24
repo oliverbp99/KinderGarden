@@ -1,19 +1,18 @@
 public class Pedagogue extends Employee {
     private String area;
 
-    public Pedagogue(String firstName, String lastName, int phoneNumber, String mail, String address, String area) {
-        super(firstName, lastName, phoneNumber, mail, address);
+    public Pedagogue(String firstName, String lastName, int phoneNumber, String mail, String area) {
+        super(firstName, lastName, phoneNumber, mail);
         this.area = area;
     }
 
     @Override
     public String toString() {
-        return "Pedagogue: " +
+        return "\nPedagogue: " +
                 "\nFirstname: " + getFirstName() +
                 "\nLastname: " + getLastName() +
                 "\nPhone number: " + getPhoneNumber() +
                 "\nMail: " + getMail() +
-                "\nAddress: " + getAddress() +
                 "\nArea: " + area;
     }
 

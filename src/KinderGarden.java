@@ -10,9 +10,16 @@ public class KinderGarden {
 
         Children[] childrenArr = new Children[60];
         Parent[] parentArr = new Parent[120];
-
+        HashMap<Integer, String> phoneList = new HashMap<Integer, String>();
         ArrayList<Pedagogue> pedaList = new ArrayList<>();
-        ArrayList<Leader> leaderList = new ArrayList<>();
+        ArrayList<Children> childrenWaitList = new ArrayList<>();
+        Leader[] leaderArr = new Leader[1];
+
+        readPedagogueFromFile(pedaList);
+        readChildrenFromFile(childrenArr);
+        readLeaderFromFile(leaderArr);
+        readParentsFromFile(parentArr);
+        readPhoneListFromFile(phoneList);
 
         mainMenu(pedaFile, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
     }
@@ -204,9 +211,23 @@ public class KinderGarden {
         showMembers(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
     }
 
-    //24-02-2021 - Hashmap
-    public void phoneList() {
+    public static void createLeader(File f, Scanner scan, Children[] childrenArr, ArrayList<Pedagogue> pedaList, Parent[] parentArr, ArrayList<Leader> leaderList, Leader[] leaderArr) throws FileNotFoundException {
 
+        System.out.println("Enter the firstname of the leader: ");
+        String firstname = scan.next();
+        System.out.println("Enter the lastname of the leader: ");
+        String lastname = scan.next();
+        System.out.println("Enter the phonenumber of the leader: ");
+        int phonenumber = scan.nextInt();
+        System.out.println("Enter the mail of the leader: ");
+        String mail = scan.next();
+        System.out.println("Enter a password: ");
+        String pw = scan.next();
+
+        Leader l1 = new Leader(firstname, lastname, phonenumber, mail, pw);
+        leaderArr[0] = l1;
+
+        System.out.println("This leader is created: " + Arrays.toString(leaderArr));
     }
 
     public static void writePedagogueToFile(File f, ArrayList<Pedagogue> pedagogueList){
@@ -260,7 +281,7 @@ public class KinderGarden {
         }
     }
 
-    public static void readLeaderFromFile(ArrayList<Leader> leaderList) throws FileNotFoundException{
+     public static void readLeaderFromFile(Leader[] leaderArr) throws FileNotFoundException{
         try{
             File f = new File("./src/Leader.txt");
             Scanner scan = new Scanner(f);
@@ -271,8 +292,9 @@ public class KinderGarden {
                 String lastName = lineScan.next();
                 int phoneNumber = lineScan.nextInt();
                 String mail = lineScan.next();
-                Leader pedas = new Leader(firstName, lastName, phoneNumber, mail);
-                leaderList.add(pedas);
+                String password = lineScan.next();
+                Leader l1 = new Leader(firstName, lastName, phoneNumber, mail, password);
+                leaderArr[0] = l1;
             }
         }catch(Exception e) {
             e.printStackTrace();
@@ -596,41 +618,25 @@ public class KinderGarden {
         return childrenArr;
     }
 
-    /*public static void addToWaitList(Children[] childrenArr) {
-
-        for (int i = 0; i <= childrenArr.length; i++) {
-            if (childrenArr != null) {
-                childrenWaitList = childrenArr; (childrenArr[i].getFirstName().childrenArr[i].getLastName().childrenArr[i].getArea());
-                System.out.println(childrenWaitList);
-            }
-            System.out.println("The child Has been added to the waitlist");
-            for (int x = 0; x < childrenArr.length; x++) {
-                if (x == childrenArr.length - 1) {
-
-                }else{
-                    System.out.println("The list is not full");
-                }
-            }
-
-        }
-    }*/
-    public static void addToPhoneList(Scanner input, HashMap<Integer, String> phonelist) {
+    public static void addToPhoneList(Scanner input, HashMap<Integer, String> phoneList) {
         System.out.println("Enter the name of the person, you want to add to the phonelist: ");
         String name = input.next();
         System.out.println("Enter the phonenumber of the person, you want to add to the phonelist: ");
         int number = input.nextInt();
-        phonelist.put(number, name);
+        phoneList.put(number, name);
         System.out.println();
     }
 
-    public static void printPhoneList(HashMap<Integer, String> phonelist) {
-        System.out.println(phonelist);
+    public static void printPhoneList(HashMap<Integer, String> phoneList)throws FileNotFoundException {
+        writePhoneListToFile(phoneList);
+        readPhoneListFromFile(phoneList);
+        System.out.println(phoneList);
     }
 
-    public static void deleteFromPhoneList(Scanner input, HashMap<Integer, String> phonelist) {
+    public static void deleteFromPhoneList(Scanner input, HashMap<Integer, String> phoneList) {
         System.out.println("Enter the phonenumber, of the person you want to delete from the phonelist: ");
         int pn = input.nextInt();
-        phonelist.remove(pn);
+        phoneList.remove(pn);
     }
 
 }

@@ -3,24 +3,21 @@ public class Employee {
     private String lastName;
     private int phoneNumber;
     private String mail;
-    private String address;
 
-    public Employee(String firstName, String lastName, int phoneNumber, String mail, String address) {
+    public Employee(String firstName, String lastName, int phoneNumber, String mail) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.mail = mail;
-        this.address = address;
     }
 
     @Override
     public String toString() {
-        return "Employee: " +
+        return "\nEmployee: " +
                 "\nFirstname: " + getFirstName() +
                 "\nLastname: " + getLastName() +
                 "\nPhone Number: " + getPhoneNumber() +
-                "\nMail: " + getMail() +
-                "\nPhone Number: " + getAddress();
+                "\nMail: " + getMail();
 
     }
 
@@ -56,11 +53,4 @@ public class Employee {
         this.mail = mail;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 }

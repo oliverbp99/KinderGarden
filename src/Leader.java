@@ -1,10 +1,11 @@
 public class Leader extends Employee{
+    String password;
 
-    public Leader(String firstName, String lastName, int phoneNumber, String mail, String address) {
-        super(firstName, lastName, phoneNumber, mail, address);
+    public Leader(String firstName, String lastName, int phoneNumber, String mail, String password) {
+        super(firstName, lastName, phoneNumber, mail);
+        this.password = password;
     }
 
-    @Override
     public String toString() {
         return "Leader: " +
                 "\nFirstName: " + getFirstName() +
@@ -12,5 +13,12 @@ public class Leader extends Employee{
                 "\nPhoneNumber: " + getPhoneNumber() +
                 "\nMail: " + getMail() +
                 "\nPassword: " + getPassword();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
