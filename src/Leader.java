@@ -6,12 +6,11 @@ public class Leader extends Employee{
 
     @Override
     public String toString() {
-        return "Leader{" +
-                "firstName='" + getFirstName() + '\'' +
-                ", lastName='" + getLastName() + '\'' +
-                ", PhoneNumber=" + getPhoneNumber() +
-                ", mail='" + getMail() + '\'' +
-                ", address='" + getAddress() + '\'' +
-                '}';
+        return "Leader: " +
+                "\nFirstName: " + getFirstName() +
+                "\nLastName='" + getLastName() +
+                "\nPhoneNumber: " + getPhoneNumber() +
+                "\nMail: " + getMail() +
+                "\nPassword: " + getPassword();
     }
 }
