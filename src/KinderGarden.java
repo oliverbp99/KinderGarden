@@ -15,9 +15,6 @@ public class KinderGarden {
         ArrayList<Leader> leaderList = new ArrayList<>();
 
         mainMenu(pedaFile, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
-
-
-
     }
 
     public static void mainMenu(File f, Scanner input, Children[] childrenArr, ArrayList<Pedagogue> pedaList, Parent[] parentArr, Leader[] leaderArr, ArrayList<Children> childrenWaitList, HashMap<Integer, String> phoneList) throws FileNotFoundException {
@@ -44,6 +41,8 @@ public class KinderGarden {
                 mainMenu(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
             }else if(mainOption == 2) {
                 printPhoneList(phoneList);
+                System.out.println("1. Back");
+                input.nextInt();
                 mainMenu(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
             }else if(mainOption == 3) {
                 deleteFromPhoneList(input, phoneList);
@@ -371,6 +370,34 @@ public class KinderGarden {
             }
             //}catch(Exception e) {
             //  e.printStackTrace();
+        }
+    }
+
+    public static void writePhoneListToFile(HashMap<Integer, String> phoneList) throws FileNotFoundException{
+       try {
+           File f = new File("./src/PhoneList.txt");
+           FileWriter fileWriter = new FileWriter(f);
+           BufferedWriter br = new BufferedWriter(fileWriter);
+           for(Map.Entry<Integer, String> entry : phoneList.entrySet()) {
+               br.write(entry.getKey() + " " + entry.getValue() );
+               br.newLine();
+               br.close();
+           }
+       }catch(IOException e) {
+            e.printStackTrace();
+       }
+    }
+
+    public static void readPhoneListFromFile(HashMap<Integer, String> phoneList) throws FileNotFoundException{
+       File f = new File("./src/PhoneList.txt");
+        Scanner scan = new Scanner(f);
+        int a = 0;
+        while (scan.hasNextLine()) {
+            String line = scan.nextLine();
+            Scanner lineScan = new Scanner(line);
+            int number = lineScan.nextInt();
+            String name = lineScan.next();
+            phoneList.put(number, name);
         }
     }
 
