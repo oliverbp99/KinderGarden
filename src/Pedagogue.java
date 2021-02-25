@@ -8,12 +8,12 @@ public class Pedagogue extends Employee {
 
     @Override
     public String toString() {
-        return "\nPedagogue: " +
+        return "Pedagogue: " +
                 "\nFirstname: " + getFirstName() +
                 "\nLastname: " + getLastName() +
                 "\nPhone number: " + getPhoneNumber() +
                 "\nMail: " + getMail() +
-                "\nArea: " + area;
+                "\nArea: " + area + "\n";
     }
 
     public String getArea() {
