@@ -749,4 +749,92 @@ public class KinderGarden {
         childrenWaitList.remove(child);
 
     }
+
+    public static void viewSortList(File f, Scanner input, Children[] childrenArr, ArrayList<Pedagogue> pedaList, Parent[] parentArr, Leader[] leaderArr, ArrayList<Children> childrenWaitList, HashMap<Integer, String> phoneList)throws FileNotFoundException{
+        System.out.print("Here you can sort any list by firstname, lastname, age etc.");
+        System.out.print("Press any action:\n1. Sort children list\n2. Sort parent list\n3. Sort pedagogue list\n4. back\n");
+        int ans = input.nextInt();
+        if(ans == 1){
+            sortChildren(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
+        }else if(ans == 2){
+            sortParent(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
+        }else if(ans == 3){
+            sortPedagogue(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
+        }else{
+            mainMenu(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
+        }
+    }
+
+    public static void sortChildren(File f, Scanner input, Children[] childrenArr, ArrayList<Pedagogue> pedaList, Parent[] parentArr, Leader[] leaderArr, ArrayList<Children> childrenWaitList, HashMap<Integer, String> phoneList) throws FileNotFoundException{
+        System.out.println("1: to sort by firstname\n2: to sort på lastname\n3: to sort by age\n4: to sort by area\n5: back");
+        List<Children> childrenList = Arrays.asList(childrenArr);
+        int ans = input.nextInt();
+        if (ans == 1) {
+            System.out.println("List of children sorted by firstname: ");
+            childrenList.sort(Comparator.comparing(Children::getFirstName));
+            System.out.println(childrenList);
+        }
+        if (ans == 2) {
+            System.out.println("List of children sorted by lastname: ");
+            childrenList.sort(Comparator.comparing(Children::getLastName));
+            System.out.println(childrenList);
+        }
+        if (ans == 3) {
+            System.out.println("List of children sorted by age: ");
+            childrenList.sort(Comparator.comparing(Children::getAge));
+            System.out.println(childrenList);
+        }
+        if (ans == 4) {
+            System.out.println("List of children sorted by area: ");
+            childrenList.sort(Comparator.comparing(Children::getArea));
+            System.out.println(childrenList);
+        }
+        else if(ans == 5) {
+            viewSortList(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
+        }
+    }
+
+    public static void sortParent(File f, Scanner input, Children[] childrenArr, ArrayList<Pedagogue> pedaList, Parent[] parentArr, Leader[] leaderArr, ArrayList<Children> childrenWaitList, HashMap<Integer, String> phoneList) throws FileNotFoundException{
+        System.out.println("1: to sort by firstname\n2: to sort på lastname\n3: back");
+        List<Parent> parentList = Arrays.asList(parentArr);
+        int ans = input.nextInt();
+        if (ans == 1) {
+            System.out.println("List of parents sorted by firstname: ");
+            parentList.sort(Comparator.comparing(Parent::getFirstName));
+            System.out.println(parentList);
+        }
+        if (ans == 2) {
+            System.out.println("List of parents sorted by lastname: ");
+            parentList.sort(Comparator.comparing(Parent::getLastName));
+            System.out.println(parentList);
+        }
+        else if(ans == 3) {
+            viewSortList(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
+        }
+    }
+
+    public static void sortPedagogue(File f, Scanner input, Children[] childrenArr, ArrayList<Pedagogue> pedaList, Parent[] parentArr, Leader[] leaderArr, ArrayList<Children> childrenWaitList, HashMap<Integer, String> phoneList) throws FileNotFoundException{
+        System.out.println("1: to sort by firstname\n2: to sort på lastname\n3: to sort by area\n4: back");
+        int ans = input.nextInt();
+        if (ans == 1) {
+            System.out.println("List of Pedagogues sorted by firstname: ");
+            pedaList.sort(Comparator.comparing(Pedagogue::getFirstName));
+            System.out.println(pedaList);
+        }
+        if (ans == 2) {
+            System.out.println("List of Pedagogues sorted by lastname: ");
+            pedaList.sort(Comparator.comparing(Pedagogue::getLastName));
+            System.out.println(pedaList);
+        }
+        if (ans == 3) {
+            System.out.println("List of Pedagogues sorted by area: ");
+            pedaList.sort(Comparator.comparing(Pedagogue::getArea));
+            System.out.println(pedaList);
+        }
+        else if(ans == 4) {
+            viewSortList(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
+        }
+    }
+
+
 }
