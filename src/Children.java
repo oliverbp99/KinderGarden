@@ -1,4 +1,4 @@
-public class Children {
+public class Children implements Comparable<Children> {
     private String firstName;
     private String lastName;
     private int age;
@@ -47,5 +47,12 @@ public class Children {
     public void setAge(int age) {
         this.age = age;
     }
-
+    public int compareTo(Children c) {
+        if(firstName.charAt(0) != c.firstName.charAt(0)){
+            return(firstName.charAt(0) - c.firstName.charAt(0));
+        }else if(lastName.charAt(0) != c.lastName.charAt(0)){
+            return(lastName.charAt(0) - c.lastName.charAt(0));
+        }
+        return 0;
+    }
 }

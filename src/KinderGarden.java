@@ -22,8 +22,27 @@ public class KinderGarden {
         readLeaderFromFile(leaderArr);
         readParentsFromFile(parentArr);
         readPhoneListFromFile(phoneList);
+        readWaitListFromFile(childrenWaitList);
+        int x = 3;
+        enterPassword(pedaFile, input, childrenArr,pedaList, parentArr, leaderArr, childrenWaitList, phoneList, x);
 
-        mainMenu(pedaFile, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
+    }
+    public static void enterPassword(File f, Scanner input, Children[] childrenArr, ArrayList<Pedagogue> pedaList, Parent[] parentArr, Leader[] leaderArr, ArrayList<Children> childrenWaitList, HashMap<Integer, String> phoneList, int x) throws FileNotFoundException {
+
+
+        System.out.println("Enter the password, to access the system: ");
+        String pw = input.next();
+
+        if(pw.equals(leaderArr[0].getPassword())) {
+            mainMenu(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
+        }else{
+            System.out.println("Wrong password - You got: " + x + " tries left");
+            x--;
+            if(x == -1) {
+                System.exit(-1);
+            }
+            enterPassword(f, input, childrenArr,pedaList, parentArr, leaderArr, childrenWaitList, phoneList, x);
+        }
     }
 
     public static void mainMenu(File f, Scanner input, Children[] childrenArr, ArrayList<Pedagogue> pedaList, Parent[] parentArr, Leader[] leaderArr, ArrayList<Children> childrenWaitList, HashMap<Integer, String> phoneList) throws FileNotFoundException {
@@ -82,6 +101,7 @@ public class KinderGarden {
             writeChildrenToFile(childrenArr);
             writePedagogueToFile(f, pedaList);
             writeParentsToFile(parentArr);
+            writeLeaderToFile(leaderArr);
             mainMenu(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
         }
     }
@@ -296,17 +316,17 @@ public class KinderGarden {
         }
     }
 
-    public static void writeLeaderToFile(ArrayList<Leader> leaderList) {
+    public static void writeLeaderToFile(Leader[] leaderArr) {
         try {
+            int i = 0;
             File f = new File("./src/Leader.txt");
-            FileWriter writer = new FileWriter(f);
-            for (int i = 0; i <= leaderList.size() - 1; i++) {
-                writer.write(leaderList.get(i).getFirstName() + " " + leaderList.get(i).getLastName() + " " + leaderList.get(i).getPhoneNumber() + " " + leaderList.get(i).getMail());
-                writer.close();
-                if (i != leaderList.size() - 1) {
-                    writer.write("\n");
-                }
+            FileWriter fileWriter = new FileWriter(f, false);
+            BufferedWriter br = new BufferedWriter(fileWriter);
+            while(leaderArr[i] != null) {
+                br.write(leaderArr[i].getFirstName() + " " + leaderArr[i].getLastName() + " " + leaderArr[i].getPhoneNumber() + " " + leaderArr[i].getMail() + " " + leaderArr[i].getPassword() + "\n");
+                i++;
             }
+            br.close();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -368,7 +388,6 @@ public class KinderGarden {
                     for (int i = 0; i < childArr.length; i++) {
                         if (childArr[i] == null) {
                             childArr[i] = child;
-                            System.out.println((childArr[i]));
                             break;
                         }
                     }
@@ -437,8 +456,8 @@ public class KinderGarden {
            for(Map.Entry<Integer, String> entry : phoneList.entrySet()) {
                br.write(entry.getKey() + " " + entry.getValue() );
                br.newLine();
-               br.close();
            }
+           br.close();
        }catch(IOException e) {
             e.printStackTrace();
        }
@@ -699,12 +718,47 @@ public class KinderGarden {
         showMembers(f, scan, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
     }
 
-    public static void deleteParents(File f, Scanner scan, Children[] childrenArr, ArrayList<Pedagogue> pedaList, Parent[] parentArr, Leader[] leaderArr, ArrayList<Children> childrenWaitList) throws FileNotFoundException {
-
+    public static void deleteParents(File f, Scanner input, Children[] childrenArr, ArrayList<Pedagogue> pedaList, Parent[] parentArr, Leader[] leaderArr, ArrayList<Children> childrenWaitList, HashMap<Integer, String> phoneList) throws FileNotFoundException {
+        System.out.println("Enter the firstname of the Parent, that you want to delete: ");
+        String delFn = input.next();
+        System.out.println("Enter the lastname of the Parent, that you want to delete: ");
+        String delLn = input.next();
+        for(int i = 0; i <= parentArr.length - 1; i++) {
+            if(parentArr[i].getFirstName().equalsIgnoreCase(delFn) && parentArr[i].getLastName().equalsIgnoreCase(delLn)) {
+                System.out.println("Are you sure you want to delete this " + parentArr[i] + "\n[1] = YES [2] = No");
+                int confirm = input.nextInt();
+                if(confirm == 1) {
+                    parentArr[i].setFirstName(null);
+                    parentArr[i].setLastName(null);
+                    parentArr[i].setPhoneNumber(0);
+                    parentArr[i].setMail(null);
+                    break;
+                }else{
+                    mainMenu(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
+                }
+            }
+        }
+        showMembers(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
     }
 
-    public static void deletePedagogue(File f, Scanner scan, Children[] childrenArr, ArrayList<Pedagogue> pedaList, Parent[] parentArr, Leader[] leaderArr, ArrayList<Children> childrenWaitList, HashMap<Integer, String> phoneList) throws FileNotFoundException {
-
+    public static void deletePedagogue(File f, Scanner input, Children[] childrenArr, ArrayList<Pedagogue> pedaList, Parent[] parentArr, Leader[] leaderArr, ArrayList<Children> childrenWaitList, HashMap<Integer, String> phoneList) throws FileNotFoundException {
+            System.out.println("Enter the firstname of the pedagogue, that you want to delete: ");
+            String delFn = input.next();
+            System.out.println("Enter the lastname of the pedagogue, that you want to delete: ");
+            String delLn = input.next();
+            for(int i = 0; i <= pedaList.size() - 1; i++) {
+                if(pedaList.get(i).getFirstName().equalsIgnoreCase(delFn) && pedaList.get(i).getLastName().equalsIgnoreCase(delLn)) {
+                    System.out.println("Are you sure you want to delete this: " + pedaList.get(i) + "\n[1] = YES [2] = No");
+                    int confirm = input.nextInt();
+                    if(confirm == 1) {
+                        pedaList.remove(i);
+                        break;
+                    }else{
+                        mainMenu(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
+                    }
+                }
+            }
+            showMembers(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
     }
 
     public static void deleteLeader(File f, Scanner input, Children[] childrenArr, ArrayList<Pedagogue> pedaList, Parent[] parentArr, Leader[] leaderArr, ArrayList<Children> childrenWaitList, HashMap<Integer, String> phoneList)throws FileNotFoundException{
