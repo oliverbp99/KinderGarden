@@ -63,8 +63,22 @@ public class KinderGarden {
         } else if (mainOption == 4) {
             viewSortList(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
         } else if (mainOption == 5) {
-            System.out.println();
+            System.out.println("Type [1] to add child to wait list, type [2] to show wait list and type, [3] to delete a child from the wait list");
+                int choice = input.nextInt();
+                if(choice == 1){
+                    addChildToWaitList(input, childrenWaitList);
+                    mainMenu(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
+                }else if(choice == 2){
+                    printWaitList(childrenWaitList);
+                    mainMenu(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
+                }else if(choice == 3){
+                    deleteFromWaitList(input, childrenArr, childrenWaitList);
+                    mainMenu(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
+                }else {
+                    mainMenu(f, input, childrenArr, pedaList, parentArr, leaderArr, childrenWaitList, phoneList);
+                }
         } else if (mainOption == 6) {
+            writeToWaitList(childrenWaitList);
             writeChildrenToFile(childrenArr);
             writePedagogueToFile(f, pedaList);
             writeParentsToFile(parentArr);
@@ -430,6 +444,20 @@ public class KinderGarden {
        }
     }
 
+    public static void writeToWaitList(ArrayList<Children> childrenWaitList){
+        try {
+            File file = new File("./src/waitList.txt");
+            FileWriter fileWriter = new FileWriter(file);
+            BufferedWriter bWriter = new BufferedWriter(fileWriter);
+            for(int i = 0; i <= childrenWaitList.size() - 1; i++){
+                bWriter.write(childrenWaitList.get(i).getFirstName() + " " + childrenWaitList.get(i).getLastName() + " " + childrenWaitList.get(i).getAge() + "\n");
+            }
+            bWriter.close();
+        }catch(IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public static void readPhoneListFromFile(HashMap<Integer, String> phoneList) throws FileNotFoundException{
        File f = new File("./src/PhoneList.txt");
        Scanner scan = new Scanner(f);
@@ -735,19 +763,37 @@ public class KinderGarden {
         childrenWaitList.add(child);
         System.out.println("Child has been added to the waitlist");
     }
-    public static void printWaitList(ArrayList<Children> childrenWaitList){
-        System.out.println("");
+
+    public static void printWaitList(ArrayList<Children> childrenWaitList) throws FileNotFoundException{
+        for(Children i : childrenWaitList) {
+            System.out.println(i);
+        }
     }
-    public static void deleteFromWaitList(Scanner input, ArrayList<Children> childrenWaitList){
+
+    public static void readWaitListFromFile(ArrayList<Children> childrenWaitList) throws FileNotFoundException{
+        File f = new File("./src/waitList.txt");
+        Scanner scan = new Scanner(f);
+        while (scan.hasNextLine()) {
+            String line = scan.nextLine();
+            Scanner lineScan = new Scanner(line);
+            String firstName = lineScan.next();
+            String lastName = lineScan.next();
+            Children child = new Children(firstName, lastName);
+            childrenWaitList.add(child);
+        }
+    }
+
+    public static void deleteFromWaitList(Scanner input, Children[] childrenArr, ArrayList<Children> childrenWaitList){
         System.out.println("Enter the firstName of the person you want to delete");
         String fn = input.next();
         System.out.println("Enter the lastName of the person you want to delete");
         String ln = input.next();
-        System.out.println("Enter the age of the person you want to delete");
-        int age = input.nextInt();
-        Children child = new Children(fn, ln, age);
-        childrenWaitList.remove(child);
-
+        for(int i = 0; i <= childrenWaitList.size() - 1; i++){
+            if(childrenWaitList.get(i).getFirstName().equalsIgnoreCase(fn) && childrenWaitList.get(i).getLastName().equalsIgnoreCase(ln)){
+                System.out.println("Child: " + childrenWaitList.get(i).getFirstName() + " " + childrenWaitList.get(i).getLastName() + " " + "has been removed from the wait list");
+                childrenWaitList.remove(i);
+            }
+        }
     }
 
     public static void viewSortList(File f, Scanner input, Children[] childrenArr, ArrayList<Pedagogue> pedaList, Parent[] parentArr, Leader[] leaderArr, ArrayList<Children> childrenWaitList, HashMap<Integer, String> phoneList)throws FileNotFoundException{

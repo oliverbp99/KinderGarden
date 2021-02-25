@@ -15,6 +15,10 @@ public class Children {
         this.lastName = lastName;
         this.age = age;
     }
+    public Children(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
     public String toString() {
         return "Children: " + getFirstName() + " " +  getLastName() + " " + getAge() + " " + getArea();
     }
